@@ -6,10 +6,22 @@ const UserModel = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    displayName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    image: DataTypes.STRING,
+    displayName: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    email: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    password: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    image: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
   }, {
     timestamps: false,
     tableName: 'users',
