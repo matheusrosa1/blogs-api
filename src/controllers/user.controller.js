@@ -1,6 +1,16 @@
 const userService = require('../services/user.service');
 const mapStatusHTTP = require('../utils/mapStatusHTTP');
 
+const getAll = async (req, res) => {
+  try {
+    const { status, data } = await userService.findAll();
+    return res.status(mapStatusHTTP(status)).json(data.modifiedUsers);
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({ error: 'Erro interno do servidor.' });
+  }
+};
+
 const create = async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
@@ -15,4 +25,5 @@ const create = async (req, res) => {
 
 module.exports = {
   create,
+  getAll,
 };

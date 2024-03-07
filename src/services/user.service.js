@@ -1,6 +1,24 @@
 const { User } = require('../models');
 const jwtUtil = require('../utils/jwt');
 
+const findAll = async () => {
+  const users = await User.findAll();
+
+  const modifiedUsers = users.map((user) => ({
+    id: user.id,
+    displayName: user.displayName,
+    email: user.email,
+    image: user.image,
+  }));
+
+  return {
+    status: 'SUCCESSFUL',
+    data: {
+      modifiedUsers,
+    },
+  };
+};
+
 const create = async (displayName, email, password, image) => {
   const foundUserByEmail = await User.findOne({ where: { email } });
 
@@ -25,4 +43,5 @@ const create = async (displayName, email, password, image) => {
 
 module.exports = {
   create,
+  findAll,
 };
