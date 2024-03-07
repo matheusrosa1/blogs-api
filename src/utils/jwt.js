@@ -1,15 +1,15 @@
 const jwt = require('jsonwebtoken');
 
-const SECRET_KEY = 'BLOGSAPI';
+/* const SECRET_KEY = 'JWT_SECRET'; */
 
 const jwtConfig = {
   expiresIn: '7d',
   algorithm: 'HS256',
 };
 
-const generateToken = (payload) => jwt.sign(payload, SECRET_KEY, jwtConfig);
+const generateToken = (payload) => jwt.sign(payload, process.env.JWT_SECRET, jwtConfig);
 
-const decodeToken = (token) => jwt.verify(token, SECRET_KEY);
+const decodeToken = (token) => jwt.verify(token, process.env.JWT_SECRET);
 
 module.exports = {
   generateToken,
