@@ -16,7 +16,12 @@ app.use(express.json());
 
 app.post('/login', loginController.login);
 
-app.post('/user', middlewares.validateEmail, userController.create);
+app.post(
+  '/user', 
+  middlewares.validateEmail,
+  middlewares.validateInputNewUser, 
+  userController.create,
+);
 // ... . .
 
 // É importante exportar a constante `app`,
