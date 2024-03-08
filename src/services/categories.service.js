@@ -8,6 +8,15 @@ const create = async (name) => {
   };
 };
 
+const findAll = async () => {
+  const categories = await Category.findAll();
+  return {
+    status: 'SUCCESSFUL',
+    data: categories,
+  };
+};
+
 module.exports = {
   create,
+  findAll,
 };

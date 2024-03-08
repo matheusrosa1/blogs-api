@@ -3,6 +3,16 @@ const mapStatusHTTP = require('../utils/mapStatusHTTP');
 
 const errorMessage = 'Erro interno do servidor.';
 
+const getAll = async (_req, res) => {
+  try {
+    const { status, data } = await categoriesServices.findAll();
+    return res.status(mapStatusHTTP(status)).json(data);
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({ error: errorMessage });
+  }
+};
+
 const create = async (req, res) => {
   try {
     const { name } = req.body;
@@ -16,4 +26,5 @@ const create = async (req, res) => {
 
 module.exports = {
   create,
+  getAll,
 };
