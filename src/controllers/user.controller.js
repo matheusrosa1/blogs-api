@@ -3,13 +3,13 @@ const mapStatusHTTP = require('../utils/mapStatusHTTP');
 
 const errorMessage = 'Erro interno do servidor.';
 
-const getAll = async (req, res) => {
+const getAll = async (_req, res) => {
   try {
     const { status, data } = await userService.findAll();
-    return res.status(mapStatusHTTP(status)).json(data.modifiedUsers);
+    return res.status(mapStatusHTTP(status)).json(data);
   } catch (error) {
     console.error(error.message);
-    return res.status(500).json({ error: 'Erro interno do servidor.' });
+    return res.status(500).json({ error: errorMessage });
   }
 };
 
@@ -20,7 +20,7 @@ const getById = async (req, res) => {
     return res.status(mapStatusHTTP(status)).json(data);    
   } catch (error) {
     console.error(error.message);
-    return res.status(500).json({ error: 'Erro interno do servidor.' });
+    return res.status(500).json({ error: errorMessage });
   }
 };
 
