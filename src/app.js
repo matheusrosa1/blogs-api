@@ -15,6 +15,7 @@ app.get('/', (_request, response) => {
 app.use(express.json());
 
 app.get('/user', middlewares.auth, userController.getAll);
+app.get('/user/:id', middlewares.auth, userController.getById);
 
 app.post('/login', loginController.login);
 
