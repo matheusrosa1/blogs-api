@@ -1,7 +1,8 @@
 const express = require('express');
 const loginController = require('./controllers/login.controller');
-const userController = require('./controllers/user.controller');
+const usersController = require('./controllers/users.controller');
 const middlewares = require('./middlewares/index');
+const { usersRoutes } = require('./routes');
 
 // ...
 
@@ -14,17 +15,19 @@ app.get('/', (_request, response) => {
 
 app.use(express.json());
 
-app.get('/user', middlewares.auth, userController.getAll);
-app.get('/user/:id', middlewares.auth, userController.getById);
+app.use('/user', usersRoutes);
 
+/* app.get('/user', middlewares.auth, usersController.getAll);
+app.get('/user/:id', middlewares.auth, usersController.getById);
+ */
 app.post('/login', loginController.login);
 
-app.post(
+/* app.post(
   '/user', 
   middlewares.validateEmail,
   middlewares.validateInputNewUser, 
-  userController.create,
-);
+  usersController.create,
+); */
 // ... . .
 
 // É importante exportar a constante `app`,
