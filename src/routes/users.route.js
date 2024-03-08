@@ -2,14 +2,15 @@ const route = require('express').Router();
 
 const usersController = require('../controllers/users.controller');
 
-const middlewares = require('../middlewares/index');
+const { validateAuth } = require('../middlewares/validateAuth');
+const { validateEmail, validateInputsNewUser } = require('../middlewares/validateUsers');
 
-route.get('/', middlewares.auth, usersController.getAll);
-route.get('/:id', middlewares.auth, usersController.getById);
+route.get('/', validateAuth, usersController.getAll);
+route.get('/:id', validateAuth, usersController.getById);
 route.post(
   '/', 
-  middlewares.validateEmail,
-  middlewares.validateInputNewUser, 
+  validateEmail,
+  validateInputsNewUser, 
   usersController.create,
 );
 

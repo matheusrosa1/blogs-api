@@ -1,7 +1,7 @@
 const jwtUtil = require('../utils/jwt');
 const { User } = require('../models');
 
-const verifyToken = async (req, res, next) => {
+const validateAuth = async (req, res, next) => {
   const { authorization: bearerToken } = req.headers;
   console.log(bearerToken);
 
@@ -24,4 +24,4 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-module.exports = verifyToken;
+module.exports = { validateAuth };

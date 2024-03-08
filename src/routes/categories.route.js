@@ -1,14 +1,13 @@
 const route = require('express').Router();
 const categoriesController = require('../controllers/categories.controller');
 
-const middlewares = require('../middlewares/index');
-
-const { validateCategory } = require('../middlewares/index');
+const { validateAuth } = require('../middlewares/validateAuth');
+const { validateInputName } = require('../middlewares/validateCategories');
 
 route.post(
   '/', 
-  middlewares.auth,
-  validateCategory.validateInputName, 
+  validateAuth,
+  validateInputName, 
   categoriesController.create,
 );
 
