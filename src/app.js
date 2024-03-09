@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { usersRoutes, loginRoutes, categoriesRoutes } = require('./routes');
+const { usersRoutes, loginRoutes, categoriesRoutes, blogPostsRoutes } = require('./routes');
 
 // ...
 
@@ -18,6 +18,8 @@ app.use('/user', usersRoutes);
 app.use('/login', loginRoutes);
 
 app.use('/categories', categoriesRoutes);
+
+app.use('/', blogPostsRoutes);
 
 // ... . .
 
