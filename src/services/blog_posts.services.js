@@ -1,4 +1,5 @@
 const { BlogPost, sequelize, Category } = require('../models');
+const { decodeToken } = require('../utils/jwt');
 
 const findPostCategories = async (categoryIds) => {
   const createPostCategoryPromises = categoryIds.map(async (categoryId) => {
@@ -13,10 +14,16 @@ const findPostCategories = async (categoryIds) => {
   }
 };
 
-const createBlogPost = async ({ title, content, categoryIds }) => {
+const createBlogPost = async ({ title, content, categoryIds, token }) => {
+/*   const { authorization: bearerToken } = req.headers;
+  const token = bearerToken.split(' ')[1]; */
+/*   const decoded = decodeToken(token); */
+  const { userId } = decodeToken(token);
+  /*   console.log('DECODED', decoded); */
+
   try {
     const postId = await sequelize.transaction(async () => {
-      const post = await BlogPost.create({ title, content });
+      const post = await BlogPost.create({ title, content, userId });
       await findPostCategories(categoryIds);
       return post.id;
     });
