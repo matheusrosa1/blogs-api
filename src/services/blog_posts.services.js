@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-const { BlogPost, sequelize, Category } = require('../models');
+const { BlogPost, sequelize, Category, PostCategory } = require('../models');
 const { decodeToken } = require('../utils/jwt');
 
 const findCategories = async (categoryIds) => {
@@ -19,9 +19,12 @@ const findCategories = async (categoryIds) => {
   return verifyNotExistCategory;
 };
 
-/* const createPostCategory = async (postId, categoryId) => {
-
-} */
+const createPostCategory = async (postId, categoryIds) => {
+  const creatingPostCategory = categoryIds.map(async (categoryId) => {
+    await PostCategory.create({ postId, categoryId });
+  });
+  await Promise.all(creatingPostCategory);
+};
 
 const createBlogPost = async ({ title, content, categoryIds, token }) => {
   const { userId } = decodeToken(token);
@@ -31,6 +34,7 @@ const createBlogPost = async ({ title, content, categoryIds, token }) => {
     if (verifyCategoriesIds.status) return verifyCategoriesIds;
     const postId = await sequelize.transaction(async () => {
       const post = await BlogPost.create({ title, content, userId });
+      await createPostCategory(post.id, categoryIds);
       return post.id;
     });
 

@@ -19,7 +19,7 @@ app.use('/login', loginRoutes);
 
 app.use('/categories', categoriesRoutes);
 
-app.use('/', blogPostsRoutes);
+app.use('/post', blogPostsRoutes);
 
 // ... . .
 
