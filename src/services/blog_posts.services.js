@@ -40,7 +40,14 @@ const findById = async (id) => {
   return { status: 'SUCCESSFUL', data: post };
 };
 
-const update = async (id, { title, content }) => {
+const update = async (id, { title, content, token }) => {
+  const { userId } = decodeToken(token);
+  /*   console.log(userId); */
+  const findPost = await BlogPost.findByPk(id);
+  if (findPost.userId !== userId) {
+    return { status: 'UNAUTHORIZED', data: { message: 'Unauthorized user' } };
+  }
+
   await BlogPost.update({ title, content }, { where: { id } });
 
   const findUpdatedPost = await BlogPost.findByPk(id, { include: [

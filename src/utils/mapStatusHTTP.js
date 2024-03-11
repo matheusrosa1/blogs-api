@@ -5,7 +5,8 @@ const httpErrorMap = {
   CONFLICT: 409,
   INVALID_VALUE: 422,
   NOT_CONTENT: 204,
-  UNAUTHORIZED: 400,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
 };
 
 const mapStatusHTTP = (status) => httpErrorMap[status] || 500;

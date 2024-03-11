@@ -26,7 +26,7 @@ const findCategories = async (categoryIds) => {
   
   if (verifyNotExistCategory) {
     return {
-      status: 'UNAUTHORIZED',
+      status: 'BAD_REQUEST',
       data: { message: 'one or more "categoryIds" not found' },
     };
   }

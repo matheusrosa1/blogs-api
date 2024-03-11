@@ -3,8 +3,8 @@ const { User } = require('../models');
 
 const validateAuth = async (req, res, next) => {
   const { authorization: bearerToken } = req.headers;
-  console.log(bearerToken);
-
+  /*   console.log(bearerToken);
+ */
   if (!bearerToken) {
     return res.status(401).json({ message: 'Token not found' });
   }
