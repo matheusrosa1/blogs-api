@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-const { BlogPost, sequelize, Category, PostCategory } = require('../models');
+const { BlogPost, sequelize, Category, PostCategory, User } = require('../models');
 const { decodeToken } = require('../utils/jwt');
 
 const findCategories = async (categoryIds) => {
@@ -46,6 +46,15 @@ const createBlogPost = async ({ title, content, categoryIds, token }) => {
   }
 };
 
+const findPostById = async (id) => {
+  const post = await BlogPost.findByPk(id, {
+    include: [{ model: User, as: 'user' },
+      { model: Category, as: 'categories' }],
+  });
+  return post;
+};
+
 module.exports = {
   createBlogPost,
+  findPostById,
 };
