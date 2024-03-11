@@ -13,23 +13,19 @@ module.exports = {
       display_name: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: '',
       },
       email: {
         allowNull: false,
         unique: true,
         type: Sequelize.STRING,
-        defaultValue: '',
       },
       password: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: '',
       },
       image: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: '',
       }
     })
   },

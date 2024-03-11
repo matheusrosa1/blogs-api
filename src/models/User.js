@@ -8,19 +8,15 @@ const UserModel = (sequelize, DataTypes) => {
     },
     displayName: {
       type: DataTypes.STRING,
-      defaultValue: ''
     },
     email: {
       type: DataTypes.STRING,
-      defaultValue: ''
     },
     password: {
       type: DataTypes.STRING,
-      defaultValue: ''
     },
     image: {
       type: DataTypes.STRING,
-      defaultValue: ''
     },
   }, {
     timestamps: false,
