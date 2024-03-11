@@ -1,14 +1,8 @@
 /* eslint-disable max-lines-per-function */
-const { BlogPost, sequelize, Category, PostCategory, User } = require('../models');
+const { BlogPost, sequelize, Category, User } = require('../models');
 const { decodeToken } = require('../utils/jwt');
 const { findCategories } = require('./categories.service');
-
-const createPostCategory = async (postId, categoryIds) => {
-  const creatingPostCategory = categoryIds.map(async (categoryId) => {
-    await PostCategory.create({ postId, categoryId });
-  });
-  await Promise.all(creatingPostCategory);
-};
+const { createPostCategory } = require('./posts_categories.service');
 
 const createBlogPost = async ({ title, content, categoryIds, token }) => {
   const { userId } = decodeToken(token);
@@ -31,19 +25,28 @@ const createBlogPost = async ({ title, content, categoryIds, token }) => {
 };
 
 const findAll = async () => {
-  const post = await BlogPost.findAll({
-    include: [
-      { model: User, as: 'user', attributes: { exclude: 'password ' } },
-      { model: Category, as: 'categories', through: { attributes: [] } },
-    ],
+  const posts = await BlogPost.findAll({ include: [
+    { model: User, as: 'user', attributes: { exclude: 'password ' } },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
   });
-  return {
-    status: 'SUCCESSFUL',
-    data: post,
-  };
+  return { status: 'SUCCESSFUL', data: posts };
+};
+
+const findById = async (id) => {
+  const post = await BlogPost.findByPk(id, { include: [
+    { model: User, as: 'user', attributes: { exclude: 'password ' } },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
+  });
+  if (!post) {
+    return { status: 'NOT_FOUND', data: { message: 'Post does not exist' } };
+  }
+  return { status: 'SUCCESSFUL', data: post };
 };
 
 module.exports = {
   createBlogPost,
   findAll,
+  findById,
 };

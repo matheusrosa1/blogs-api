@@ -29,7 +29,20 @@ const findAll = async (req, res) => {
   }
 };
 
+const findById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { status, data } = await blogPostsServices.findById(id);
+
+    return res.status(mapStatusHTTP(status)).json(data);
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({ error: errorMessage });
+  }
+};
+
 module.exports = {
   createBlogPost,
   findAll,
+  findById,
 };

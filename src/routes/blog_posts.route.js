@@ -7,5 +7,6 @@ const { validateInputData } = require('../middlewares/validateBlogPosts');
 route.post('/', validateAuth, validateInputData, blogPostsController.createBlogPost);
 
 route.get('/', validateAuth, blogPostsController.findAll);
+route.get('/:id', validateAuth, blogPostsController.findById);
 
 module.exports = route;
