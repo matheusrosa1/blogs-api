@@ -41,15 +41,13 @@ const findById = async (id) => {
 };
 
 const update = async (id, { title, content }) => {
-  const updatedPost = await BlogPost.update({ title, content }, {
-    where: {
-      id,
-    },
-  });
-  return {
-    status: 'SUCCESSFUL',
-    data: updatedPost,
-  };
+  await BlogPost.update({ title, content }, { where: { id } });
+
+  const findUpdatedPost = await BlogPost.findByPk(id, { include: [
+    { model: User, as: 'user', attributes: { exclude: 'password ' } },
+    { model: Category, as: 'categories', through: { attributes: [] } }] });
+
+  return { status: 'SUCCESSFUL', data: findUpdatedPost };
 };
 
 module.exports = { createBlogPost, findAll, findById, update };
