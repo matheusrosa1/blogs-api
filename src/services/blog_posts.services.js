@@ -1,23 +1,7 @@
 /* eslint-disable max-lines-per-function */
 const { BlogPost, sequelize, Category, PostCategory, User } = require('../models');
 const { decodeToken } = require('../utils/jwt');
-
-const findCategories = async (categoryIds) => {
-  const findPostCategoryPromises = categoryIds.map(async (categoryId) => {
-    const dataValues = await Category.findByPk(categoryId);
-    return dataValues;
-  });
-  const categories = await Promise.all(findPostCategoryPromises);
-  const verifyNotExistCategory = categories.some((category) => category === null); // retorna um true ou false, caso seja true, alguma das categorias informadas não foram encontradas no banco de dados.
-  
-  if (verifyNotExistCategory) {
-    return {
-      status: 'UNAUTHORIZED',
-      data: { message: 'one or more "categoryIds" not found' },
-    };
-  }
-  return verifyNotExistCategory;
-};
+const { findCategories } = require('./categories.service');
 
 const createPostCategory = async (postId, categoryIds) => {
   const creatingPostCategory = categoryIds.map(async (categoryId) => {
@@ -46,15 +30,20 @@ const createBlogPost = async ({ title, content, categoryIds, token }) => {
   }
 };
 
-const findPostById = async (id) => {
-  const post = await BlogPost.findByPk(id, {
-    include: [{ model: User, as: 'user' },
-      { model: Category, as: 'categories' }],
+const findAll = async () => {
+  const post = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user', attributes: { exclude: 'password ' } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
   });
-  return post;
+  return {
+    status: 'SUCCESSFUL',
+    data: post,
+  };
 };
 
 module.exports = {
   createBlogPost,
-  findPostById,
+  findAll,
 };

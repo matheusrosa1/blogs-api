@@ -18,10 +18,9 @@ const createBlogPost = async (req, res) => {
   }
 };
 
-const getPostById = async (req, res) => {
-  const { id } = req.params;
+const findAll = async (req, res) => {
   try {
-    const { status, data } = await blogPostsServices.findPostById(id);
+    const { status, data } = await blogPostsServices.findAll();
 
     return res.status(mapStatusHTTP(status)).json(data);
   } catch (error) {
@@ -32,5 +31,5 @@ const getPostById = async (req, res) => {
 
 module.exports = {
   createBlogPost,
-  getPostById,
+  findAll,
 };
