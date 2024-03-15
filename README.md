@@ -48,7 +48,7 @@ Uma visão geral mais detalhada do projeto, explicando o que ele faz, por que é
 
 5. Use o comando `docker exec -it blogs_api bash`. Ele te dará acesso ao terminal interativo do container criado pelo compose, que está rodando em segundo plano.
 
-6. Instale as dependências [Caso existam] com `npm install`. (Instale dentro do container)
+6. Instale as dependências com `npm install`. (Instale dentro do container)
 
 ⚠️ Atenção: Caso opte por utilizar o Docker, TODOS os comandos disponíveis no `package.json` (`npm start`, `npm test`, `npm run dev`, ...) devem ser executados DENTRO do container, ou seja, no terminal que aparece após a execução do comando `docker exec` citado acima.
 
