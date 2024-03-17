@@ -71,7 +71,7 @@ Antes de começar, você precisará garantir que o servidor esteja em execução
 
 Antes de fazer qualquer outra requisição que exija autenticação, você precisará autenticar um usuário para obter um token de autenticação JWT. Siga estes passos:
 
-1. Faça um POST para o endpoint `http://localhost:porta/users/login` com as credenciais no corpo da requisição de um usuário existente no banco de dados. Isso irá gerar um token de autenticação.
+1. Faça um POST para o endpoint `http://localhost:port/users/login` com as credenciais no corpo da requisição de um usuário existente no banco de dados. Isso irá gerar um token de autenticação.
 
    Exemplo de corpo da requisição:
    ```json
