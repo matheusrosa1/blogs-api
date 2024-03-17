@@ -1,4 +1,4 @@
-# Título do Projeto
+# API Blogs
 
 Este projeto é uma API de blogs desenvolvida utilizando Node.js e Sequelize. Ele oferece endpoints para gerenciar posts, categorias e comentários em um blog.
 
