@@ -79,11 +79,7 @@ Antes de fazer qualquer outra requisição que exija autenticação, você preci
        "email": "lewishamilton@gmail.com",
        "password": "123456"
    }
-   
-## Contribuição
 
-
-## Licença
 
 
 ## Contato
