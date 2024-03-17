@@ -2,7 +2,6 @@ const blogPostsServices = require('../services/blog_posts.services');
 const mapStatusHTTP = require('../utils/mapStatusHTTP');
 
 const errorMessage = 'Erro interno do servidor.';
-
 const createBlogPost = async (req, res) => {
   const { authorization: bearerToken } = req.headers;
   const token = bearerToken.split(' ')[1];
@@ -13,7 +12,6 @@ const createBlogPost = async (req, res) => {
     );
     return res.status(mapStatusHTTP(status)).json(data);
   } catch (error) {
-    console.error(error.message);
     return res.status(500).json({ error: errorMessage });
   }
 };
@@ -50,9 +48,16 @@ const update = async (req, res) => {
   }
 };
 
-module.exports = {
-  createBlogPost,
-  findAll,
-  findById,
-  update,
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { authorization: bearerToken } = req.headers;
+  const token = bearerToken.split(' ')[1];
+  try {
+    const { status, data } = await blogPostsServices.remove(id, { token });
+    return res.status(mapStatusHTTP(status)).json(data);
+  } catch (error) {
+    return res.status(500).json({ error: errorMessage });
+  }
 };
+
+module.exports = { createBlogPost, findAll, findById, update, remove };

@@ -6,21 +6,17 @@ const { createPostCategory } = require('./posts_categories.service');
 
 const createBlogPost = async ({ title, content, categoryIds, token }) => {
   const { userId } = decodeToken(token);
-  try {
-    const verifyCategoriesIds = await findCategories(categoryIds);
-    if (verifyCategoriesIds.status) return verifyCategoriesIds;
-    const postId = await sequelize.transaction(async () => {
-      const post = await BlogPost.create({ title, content, userId });
-      await createPostCategory(post.id, categoryIds);
-      return post.id;
-    });
+  const verifyCategoriesIds = await findCategories(categoryIds);
+  if (verifyCategoriesIds.status) return verifyCategoriesIds;
+  const postId = await sequelize.transaction(async () => {
+    const post = await BlogPost.create({ title, content, userId });
+    await createPostCategory(post.id, categoryIds);
+    return post.id;
+  });
 
-    const postWithCategory = await BlogPost.findByPk(postId);
+  const postWithCategory = await BlogPost.findByPk(postId);
     
-    return { status: 'CREATED', data: postWithCategory };
-  } catch (error) {
-    return { status: 'INVALID_DATA', data: { message: error.message } };
-  }
+  return { status: 'CREATED', data: postWithCategory };
 };
 
 const findAll = async () => {
@@ -53,8 +49,22 @@ const update = async (id, { title, content, token }) => {
   const findUpdatedPost = await BlogPost.findByPk(id, { include: [
     { model: User, as: 'user', attributes: { exclude: 'password ' } },
     { model: Category, as: 'categories', through: { attributes: [] } }] });
-
   return { status: 'SUCCESSFUL', data: findUpdatedPost };
 };
 
-module.exports = { createBlogPost, findAll, findById, update };
+const remove = async (id, { token }) => {
+  const { userId } = decodeToken(token);
+  const findPost = await BlogPost.findByPk(id);
+  if (findPost.userId !== userId) {
+    return { status: 'UNAUTHORIZED', data: { message: 'Unauthorized user' } };
+  }
+  if (!findPost) {
+    return { status: 'NOT_FOUND', data: { message: 'Post does not exist' } };
+  }
+  const wasRemoved = await BlogPost.destroy(
+    { where: { id } },
+  );
+  return { status: 'NOT_CONTENT' }; // tem que ajustar essa parte, só deve ser retornado um status, sem data
+};
+
+module.exports = { createBlogPost, findAll, findById, update, remove };

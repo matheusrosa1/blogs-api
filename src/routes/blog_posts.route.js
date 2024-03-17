@@ -9,5 +9,6 @@ route.post('/', validateAuth, validateInputData, blogPostsController.createBlogP
 route.get('/', validateAuth, blogPostsController.findAll);
 route.get('/:id', validateAuth, blogPostsController.findById);
 route.put('/:id', validateAuth, validateUpdateInputData, blogPostsController.update);
+route.delete('/:id', validateAuth, blogPostsController.remove);
 
 module.exports = route;
