@@ -1,7 +1,5 @@
 # API Blogs
 
-Este projeto é uma API de blogs desenvolvida utilizando Node.js e Sequelize. Ele oferece endpoints para gerenciar posts, categorias e comentários em um blog.
-
 ## Índice
 
 - [Visão Geral](#visão-geral)
@@ -14,7 +12,7 @@ Este projeto é uma API de blogs desenvolvida utilizando Node.js e Sequelize. El
 
 ## Visão Geral
 
-Uma visão geral mais detalhada do projeto, explicando o que ele faz, por que é útil, etc.
+Este projeto é uma API de blogs desenvolvida utilizando Node.js e Sequelize. Ele oferece endpoints para gerenciar posts, categorias e comentários em um blog.
 
 ## Principais Características:
 
